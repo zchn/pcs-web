@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- 2021-01-01 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Practical Computer Security (Spring 2021, CSCI-GA.3033-074)</title>
+<title>Publishing org-mode projects on Gitlab Pages</title>
 <meta name="generator" content="Org mode">
-<meta name="author" content="Kevin Chen">
+<meta name="author" content="Rasmus">
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
@@ -217,100 +218,94 @@
 <body>
 <main id="content">
 <header>
-<h1 class="title">Practical Computer Security (Spring 2021, CSCI-GA.3033-074)</h1>
-</header><section id="outline-container-org31c7a01" class="outline-2">
-<h2 id="org31c7a01">Basic Information</h2>
-<div class="outline-text-2" id="text-org31c7a01">
-<dl class="org-dl">
-<dt>This website</dt><dd><a href="https://cs.nyu.edu/courses/spring21/CSCI-GA.3033-074/">https://cs.nyu.edu/courses/spring21/CSCI-GA.3033-074/</a></dd>
-<dt>Instructor</dt><dd><a href="http://ckev.in/">Kevin Chen</a></dd>
-<dt>Class Hours</dt><dd>Wed 7:10-9:00PM</dd>
-<dt>Classroom</dt><dd>Online via Zoom</dd>
-<dt>Course Number</dt><dd>CSCI-GA.3033-074</dd>
-<dt>Course Title</dt><dd>Practical Computer Security</dd>
-</dl>
-</div>
-</section>
-<section id="outline-container-orgc987e14" class="outline-2">
-<h2 id="orgc987e14">Introduction</h2>
-<div class="outline-text-2" id="text-orgc987e14">
+<h1 class="title">Publishing org-mode projects on Gitlab Pages</h1>
+</header><p>
+Example <a href="http://orgmode.org">org-mode</a> website using <a href="http://pages.gitlab.io/">GitLab Pages</a>.
+Learn more about GitLab Pages at <a href="https://pages.gitlab.io">https://pages.gitlab.io</a> and the
+official documentation <a href="https://docs.gitlab.com/ce/user/project/pages/">https://docs.gitlab.com/ce/user/project/pages/</a>.
+</p>
+<section id="outline-container-org3893a89" class="outline-2">
+<h2 id="org3893a89">Org-mode</h2>
+<div class="outline-text-2" id="text-org3893a89">
 <p>
-This course teaches the security mindset and practical security concepts that
-are essential for software engineers, software developers, quality assurance
-testers and IT managers. The course discusses various attack techniques and
-defenses for real world applications and the security activities in the
-SDLC. Its main topics include: low-level exploits, web application security,
-malware, threat modeling, security requirements, secure coding practices,
-security &amp; penetration testing, human factors and usability, mobile platform
-security, and legal and ethical issues. Course project and assignments may
-require C, JavaScript, Python, and/or other scripting languages.
-Prerequisites: Programming experience in C/C++, JavaScript, Python, and SQL;
-basic understanding of assembly language; working knowledge of web application
-development.
+Org-mode is <a href="http://www.gnu.org/philosophy/free-sw.en.html">Free Software</a> and part of <a href="https://www.gnu.org/s/emacs/">GNU Emacs</a>.  It&rsquo;s a simple
+document format (&ldquo;Org&rdquo;) with a powerful and intuitive interface
+(org-mode) that can <a href="http://orgmode.org/org.html#Exporting">export</a> and <a href="http://orgmode.org/org.html#Publishing">publish</a> to html, LaTeX, ascii, odt
+amongst others, and <a href="http://orgmode.org/org.html#Working-with-source-code">evaluate source code</a>.
+The org-mode manual can be accessed here: <a href="http://orgmode.org/org.html">http://orgmode.org/org.html</a>.
+The main place for Org development is the mailing list, available on
+<a href="http://dir.gmane.org/gmane.emacs.orgmode">Gmane</a>.
 </p>
 </div>
 </section>
-<section id="outline-container-org3195f2f" class="outline-2">
-<h2 id="org3195f2f">FAQ for Course Registration Inquiries</h2>
-<div class="outline-text-2" id="text-org3195f2f">
-</div>
-<div id="outline-container-orgc4a867a" class="outline-3">
-<h3 id="orgc4a867a">Do you have a syllabus for this course?</h3>
-<div class="outline-text-3" id="text-orgc4a867a">
+<section id="outline-container-org354dd8b" class="outline-2">
+<h2 id="org354dd8b">Gitlab CI</h2>
+<div class="outline-text-2" id="text-org354dd8b">
 <p>
-Here is a tentative topic list for Spring 2021:
+This project&rsquo;s static Pages are built by <a href="https://about.gitlab.com/gitlab-ci/">GitLab CI</a>, following the
+steps defined in <a href="https://gitlab.com/pages/nikola/blob/master/.gitlab-ci.yml">.gitlab-ci.yml</a>:
 </p>
-
-<ol class="org-ol">
-<li>Memory safety
-<ol class="org-ol">
-<li>Buffer overflow</li>
-<li>Memory war</li>
-<li>Integer overflow, format string vulnerability, etc.</li>
-</ol></li>
-<li>Malware</li>
-<li>Web security
-<ol class="org-ol">
-<li>Command injection and SQL injection attacks</li>
-<li>Cross site scripting</li>
-<li>Cross site request forgery, etc.</li>
-</ol></li>
-<li>Software security
-<ol class="org-ol">
-<li>Security architecture and principles</li>
-<li>Isolation and sandboxing</li>
-<li>Fuzzing and program analysis</li>
-</ol></li>
-<li>Network security</li>
-</ol>
+<div class="org-src-container">
+<pre class="src src-conf">image: moul/emacs
+pages:
+  script:
+  - emacs --batch --eval <span style="font-style: italic;">"(progn (package-initialize) (package-refresh-contents) (package-install 'org))"</span>
+  - emacs --batch --no-init-file --load publish.el --funcall org-publish-all
+  artifacts:
+    paths:
+    - public
+  only:
+  - master
+</pre>
 </div>
-</div>
-
-<div id="outline-container-org27e23d6" class="outline-3">
-<h3 id="org27e23d6">What are the course assignments?</h3>
-<div class="outline-text-3" id="text-org27e23d6">
 <p>
-There will be around 6 take-home labs related to memory safety and web security. The labs will be largely based on SEED labs.
-</p>
-
-<p>
-Due to the class being converted to remote, we are still developing alternative solutions to the midterm and final exams. Currently we are trying to replace them with homeworks and/or semester-long projects.
+These build instructions are using a docker image, namely <code>moul/emacs</code>.
+It makes it possible to publish the project on a public runner on
+Gitlab.com.
+You could probably get a better experience by using a local runner on
+a server you control.  If so, you can drop the <code>image</code> keyword.
 </p>
 </div>
-</div>
-
-<div id="outline-container-org74ea187" class="outline-3">
-<h3 id="org74ea187">What is the grading composition for this course?</h3>
-<div class="outline-text-3" id="text-org74ea187">
+</section>
+<section id="outline-container-org3bd8ed1" class="outline-2">
+<h2 id="org3bd8ed1">Building locally</h2>
+<div class="outline-text-2" id="text-org3bd8ed1">
 <p>
-Tentatively, 50-60% for the labs, 30-45% for the project/homeworks and 5-10% for in-class and Piazza participation.
+Org-mode is part of GNU Emacs.  See how to obtain GNU Emacs on your OS
+here: <a href="https://www.gnu.org/software/emacs/download.html">https://www.gnu.org/software/emacs/download.html</a>.
+To get the latest version of Org see <a href="http://orgmode.org">http://orgmode.org</a>.
 </p>
 </div>
+</section>
+<section id="outline-container-org2e93af2" class="outline-2">
+<h2 id="org2e93af2">GitLab User or Group Pages</h2>
+<div class="outline-text-2" id="text-org2e93af2">
+<p>
+To use this project as your user/group website, you will need one
+additional step: just rename your project to <code>namespace.gitlab.io</code>,
+where <code>namespace</code> is your <code>username</code> or <code>groupname</code>. This can be done by
+navigating to your project&rsquo;s Settings.
+Read more about <a href="https://docs.gitlab.com/ce/user/project/pages/#user-or-group-pages">user/group Pages</a> and <a href="https://docs.gitlab.com/ce/user/project/pages/#project-pages">project Pages</a>.
+</p>
+</div>
+</section>
+<section id="outline-container-orgf72c4d0" class="outline-2">
+<h2 id="orgf72c4d0">Did you fork this project?</h2>
+<div class="outline-text-2" id="text-orgf72c4d0">
+<p>
+If you forked this project for your own use, please go to your
+project&rsquo;s Settings and remove the forking relationship, which won&rsquo;t be
+necessary unless you want to contribute back to the upstream project.
+&#x2014;
+Forked from <a href="https://gitlab.com/pank/org-mode-gitlab-pages">https://gitlab.com/pank/org-mode-gitlab-pages</a>
+</p>
 </div>
 </section>
 </main>
 <footer id="postamble" class="status">
-<p class="author">Author: Kevin Chen</p>
+<p class="date">Date: 2016-05-23</p>
+<p class="author">Author: Rasmus</p>
+<p class="date">Created: 2021-01-01</p>
 </footer>
 </body>
 </html>
